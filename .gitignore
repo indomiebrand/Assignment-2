@@ -1,0 +1,55 @@
+﻿# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Asset meta files
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+*.scriptmeta
+
+# Auto-generated VS/VSCode/Jetbrains Rider project files
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.VC.db
+
+# Unity3D generated meta files
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Builds
+*.apk
+*.aab
+*.xcodeproj
+
+# Crashlytics generated file
+crashlytics-build.properties
+
+# Packed Addressables
+*.addressable
+
+# Visual Studio Code
+.vscode/
+
+# Unity cache directory
+[Ll]ibrary/Artifacts
+[Ll]ibrary/ScriptAssemblies
+[Ll]ibrary/PlayerDataCache
+[Ll]ibrary/PlayerDataCache/ArtifactDB
+[Ll]ibrary/PackageCache
