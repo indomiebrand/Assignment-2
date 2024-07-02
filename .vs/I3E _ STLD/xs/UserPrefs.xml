@@ -1,14 +1,16 @@
 ﻿<Properties StartupConfiguration="{9912311C-0B69-8FD2-D439-28D23F7DECE5}|">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ddbe6605-c6be-478c-b6cc-5013e4b99bde" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Library/PackageCache/com.unity.ide.visualstudio@2.0.22/Editor/ProjectGeneration/ProjectGeneration.cs">
-    <Files>
-      <File FileName="Library/PackageCache/com.unity.ide.visualstudio@2.0.22/Editor/ProjectGeneration/ProjectGeneration.cs" Line="880" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a8475237-2df3-4fcf-bd88-283c28f33ff9" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CameraLock.cs">
+    <Files>
+      <File FileName="Library/PackageCache/com.unity.ide.visualstudio@2.0.22/Editor/ProjectGeneration/ProjectGeneration.cs" />
+      <File FileName="Assets/Scripts/FadeInEffect.cs" />
+      <File FileName="Assets/Scripts/CameraLock.cs" Line="11" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
