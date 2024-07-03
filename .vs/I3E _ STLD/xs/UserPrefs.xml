@@ -5,14 +5,17 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a8475237-2df3-4fcf-bd88-283c28f33ff9" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Interactable.cs">
     <Files>
       <File FileName="Library/PackageCache/com.unity.ide.visualstudio@2.0.22/Editor/ProjectGeneration/ProjectGeneration.cs" />
       <File FileName="Assets/Scripts/FadeInEffect.cs" />
       <File FileName="Assets/Scripts/CameraLock.cs" />
-      <File FileName="Assets/Scripts/GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameManager.cs" />
       <File FileName="Assets/Scripts/ButtonUI.cs" />
-      <File FileName="Assets/Scripts/VolumeControl.cs" Line="23" Column="29" />
+      <File FileName="Assets/Scripts/VolumeControl.cs" />
+      <File FileName="Assets/Scripts/UIManager.cs" />
+      <File FileName="Assets/Scripts/Interactable.cs" Line="38" Column="10" />
+      <File FileName="Assets/Scripts/DialogueManager.cs" Line="16" Column="43" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
