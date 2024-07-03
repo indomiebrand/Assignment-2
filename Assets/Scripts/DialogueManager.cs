@@ -1,80 +1,68 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager Instance;
+
     public GameObject dialogueBox;
-    public Animator dialogueAnimator;
-    public TextMeshProUGUI dialogueText;
+    public TMP_Text dialogueText;
 
-    [HideInInspector]
-    public bool isDialogueActive = false;
+    private Queue<string> dialogueLines;
+    private Interactable currentInteractable;
 
-    private string[] dialogueLines; // an array to hold lines of dialogues
-    private int currentLineIndex = 0; // used to show which line of dialogue should be shown within the array
-    private KeyCode interactionKey;
-
-    private void Start()
+    private void Awake()
     {
-        dialogueBox.SetActive(false);
-        dialogueText.gameObject.SetActive(false);
-    }
-
-    public void ShowDialogue(string[] lines, KeyCode key)
-    {
-        if (!isDialogueActive)
+        if (Instance == null)
         {
-            isDialogueActive = true;
-            dialogueBox.SetActive(true);
-            dialogueLines = lines;
-            currentLineIndex = 0;
-            interactionKey = key;
-            StartCoroutine(PlayDialogueInAnimation());
-        }
-    }
-
-    private IEnumerator PlayDialogueInAnimation()
-    {
-        dialogueAnimator.Play("DialogueIN");
-        yield return new WaitForSeconds(dialogueAnimator.GetCurrentAnimatorStateInfo(0).length);
-        dialogueText.gameObject.SetActive(true);
-        DisplayLine();
-    }
-
-    private void DisplayLine()
-    {
-        dialogueText.text = dialogueLines[currentLineIndex];
-    }
-
-    private void Update()
-    {
-        if (isDialogueActive && Input.GetKeyDown(interactionKey))
-        {
-            NextLine();
-        }
-    }
-
-    private void NextLine()
-    {
-        currentLineIndex++;
-        if (currentLineIndex < dialogueLines.Length)
-        {
-            DisplayLine();
+            Instance = this;
         }
         else
         {
-            StartCoroutine(EndDialogue());
+            Destroy(gameObject);
         }
     }
 
-    public IEnumerator EndDialogue()
+    private void Start()
     {
-        dialogueText.gameObject.SetActive(false);
-        dialogueAnimator.Play("DialogueOUT");
-        yield return new WaitForSeconds(dialogueAnimator.GetCurrentAnimatorStateInfo(0).length);
+        dialogueLines = new Queue<string>();
+        dialogueBox.SetActive(false); // hides the dialogue box at the start
+        dialogueText.gameObject.SetActive(false); // hides the dialogue text at the start
+    }
+
+    public void StartDialogue(string[] lines, Interactable interactable)
+    {
+        currentInteractable = interactable;
+        dialogueLines.Clear();
+
+        foreach (string line in lines)
+        {
+            dialogueLines.Enqueue(line);
+        }
+
+        dialogueBox.SetActive(true);
+        dialogueText.gameObject.SetActive(true);
+        DisplayNextLine();
+    }
+
+    public void DisplayNextLine()
+    {
+        if (dialogueLines.Count == 0)
+        {
+            EndDialogue();
+            return;
+        }
+
+        string line = dialogueLines.Dequeue();
+        dialogueText.text = line;
+    }
+
+    private void EndDialogue()
+    {
         dialogueBox.SetActive(false);
-        isDialogueActive = false;
+        dialogueText.gameObject.SetActive(false);
+        currentInteractable.EndInteraction();
     }
 }

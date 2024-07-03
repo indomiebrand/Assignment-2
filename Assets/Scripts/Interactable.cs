@@ -1,57 +1,77 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using StarterAssets;
 
 public class Interactable : MonoBehaviour
 {
-    public Canvas interactCanvas;
-    public string[] dialogueLines; // an array to hold dialogue lines for the specific gameobject(s)
-    public KeyCode interactionKey = KeyCode.E;
-    public DialogueManager dialogueManager; // references the DialogueManager script
+    public Canvas interactionCanvas;
+    public string[] dialogueLines; // Dialogue lines for interaction
+    public bool isRequiredItem = false;
+    private bool isPlayerInRange = false;
+    private bool isInteracting = false;
+    private FirstPersonController playerController;
 
-    private bool isPlayerInRange = false; // to track if the player is in range
-
-    void Start()
+    private void Start()
     {
-        if (interactCanvas != null)
-        {
-            interactCanvas.gameObject.SetActive(false); // hides the canvas at the start if it's not hidden
-        }
-
-        dialogueManager = FindObjectOfType<DialogueManager>();
+        interactionCanvas.enabled = false; // Hide the interaction canvas at start
     }
 
-    void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.CompareTag("Player"))
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            isPlayerInRange = true; // sets player in range flag to true
-            Debug.Log("OnTriggerEnter called with: " + other.name);
-            Debug.Log("Activating Canvas");
-            interactCanvas.gameObject.SetActive(true); // shows the canvas when the player enters the trigger
-        }
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player") && Input.GetKeyDown(interactionKey))
-        {
-            if (dialogueManager != null && !dialogueManager.isDialogueActive)
+            if (!isInteracting)
             {
-                dialogueManager.ShowDialogue(dialogueLines, interactionKey);
+                StartInteraction();
+            }
+            else
+            {
+                ContinueDialogue();
             }
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void StartInteraction()
+    {
+        isInteracting = true;
+        playerController.enabled = false; // Disable player movement
+        interactionCanvas.enabled = true;
+        DialogueManager.Instance.StartDialogue(dialogueLines, this);
+    }
+
+    private void ContinueDialogue()
+    {
+        DialogueManager.Instance.DisplayNextLine(); // Display next line of dialogue
+    }
+
+    public void EndInteraction()
+    {
+        isInteracting = false;
+        interactionCanvas.enabled = false;
+        playerController.enabled = true; // Enable player movement again
+
+        if (isRequiredItem)
+        {
+            Destroy(gameObject); // Destroy the game object if it is a required item
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInRange = false; // sets player in range flag to false
-            Debug.Log("OnTriggerExit called with: " + other.name);
-            Debug.Log("Deactivating Canvas");
-            interactCanvas.gameObject.SetActive(false); // hides the canvas when the player exits the trigger
-            dialogueManager.EndDialogue(); // ends dialogue using DialogueManager script
+            isPlayerInRange = true;
+            playerController = other.GetComponent<FirstPersonController>();
+            interactionCanvas.enabled = true; // Show interaction canvas
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInRange = false;
+            interactionCanvas.enabled = false; // Hide interaction canvas
+            EndInteraction();
         }
     }
 }
