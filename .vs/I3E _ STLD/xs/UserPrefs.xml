@@ -1,29 +1,17 @@
 ﻿<Properties StartupConfiguration="{9912311C-0B69-8FD2-D439-28D23F7DECE5}|">
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a8475237-2df3-4fcf-bd88-283c28f33ff9" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Interactable.cs">
-    <Files>
-      <File FileName="Library/PackageCache/com.unity.ide.visualstudio@2.0.22/Editor/ProjectGeneration/ProjectGeneration.cs" />
-      <File FileName="Assets/Scripts/FadeInEffect.cs" />
-      <File FileName="Assets/Scripts/CameraLock.cs" />
-      <File FileName="Assets/Scripts/GameManager.cs" />
-      <File FileName="Assets/Scripts/ButtonUI.cs" />
-      <File FileName="Assets/Scripts/VolumeControl.cs" />
-      <File FileName="Assets/Scripts/UIManager.cs" />
-      <File FileName="Assets/Scripts/Interactable.cs" Line="38" Column="10" />
-      <File FileName="Assets/Scripts/DialogueManager.cs" Line="16" Column="43" />
-    </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="Unity" selected="True" />
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RequiredItemEventTrigger.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Interactable.cs" Line="9" Column="11" />
+      <File FileName="Assets/Scripts/DialogueManager.cs" Line="52" Column="38" />
+      <File FileName="Assets/Scripts/PlayerInventory.cs" Line="16" Column="25" />
+      <File FileName="Assets/Scripts/RequiredItemEventTrigger.cs" Line="6" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8e7e641f-f2d3-4481-8652-f2e78e459395" />
 </Properties>
