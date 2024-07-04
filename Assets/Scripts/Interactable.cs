@@ -9,11 +9,13 @@ public class Interactable : MonoBehaviour
     public string itemName; //name of interactable
 
     public bool isRequiredItem = false;
+    public bool LoadNextScene = false;
     private bool isPlayerInRange = false;
     private bool isInteracting = false;
 
     private FirstPersonController playerController;
     private PlayerInventory playerInventory;
+    public GameManager gameManager;
 
     private void Start()
     {
@@ -37,17 +39,25 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    private void StartInteraction()
+    private void StartInteraction() 
     {
         isInteracting = true;
         playerController.enabled = false; // disable player movement
         interactionCanvas.enabled = true;
-        DialogueManager.Instance.StartDialogue(dialogueLines, this);
+
+        if (LoadNextScene)
+        {
+            gameManager.LoadNextScene();
+        }
+        else
+        {
+            DialogueManager.Instance.StartDialogue(dialogueLines, this);
+        }
     }
 
     private void ContinueDialogue()
     {
-        DialogueManager.Instance.DisplayNextLine(); // Display next line of dialogue
+        DialogueManager.Instance.DisplayNextLine(); // displays next line of dialogue
     }
 
     public void EndInteraction()
@@ -64,12 +74,12 @@ public class Interactable : MonoBehaviour
                 if (itemObject != null)
                 {
                     playerInventory.AddItem(itemObject);
-                    itemObject.SetActive(false); // Deactivate the GameObject instead of destroying it
+                    itemObject.SetActive(false); // deactivates the gameobject
                 }
-                else
-                {
-                    Debug.LogWarning("Item GameObject not found with name: " + itemName);
-                }
+                //else
+                //{
+                //    Debug.LogWarning("Item GameObject not found with name: " + itemName);
+                //}
             }
         }
     }
@@ -81,7 +91,7 @@ public class Interactable : MonoBehaviour
             isPlayerInRange = true;
             playerController = other.GetComponent<FirstPersonController>();
             playerInventory = other.GetComponent<PlayerInventory>();
-            interactionCanvas.enabled = true; // Show interaction canvas
+            interactionCanvas.enabled = true; // shows interaction canvas
         }
     }
 
@@ -90,7 +100,7 @@ public class Interactable : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInRange = false;
-            interactionCanvas.enabled = false; // Hide interaction canvas
+            interactionCanvas.enabled = false; // hides interaction canvas
             EndInteraction();
         }
     }

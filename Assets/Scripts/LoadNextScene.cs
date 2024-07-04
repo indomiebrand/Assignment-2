@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
-public class CutsceneController : MonoBehaviour
+public class LoadNextScene : MonoBehaviour
 {
     public PlayableDirector playableDirector;
     public string nextSceneName;
