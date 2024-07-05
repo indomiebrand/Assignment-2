@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RequiredItemEventTrigger : MonoBehaviour
 {
-    public GameObject requiredItem;
+    public GameObject[] requiredItems; // array to hold multiple required items
     public GameObject triggerObject;
 
     private Interactable interactableScript;
@@ -26,7 +26,7 @@ public class RequiredItemEventTrigger : MonoBehaviour
         }
         //else
         //{
-        //    // Debug.LogError("Player not found in the scene.");
+        //    // Debug.LogError("Player GameObject not found in the scene.");
         //}
     }
 
@@ -40,21 +40,30 @@ public class RequiredItemEventTrigger : MonoBehaviour
 
     private void CheckTriggerEvent()
     {
-        if (requiredItem == null)
+        if (requiredItems == null || requiredItems.Length == 0)
         {
-            // Debug.LogWarning("Required item is not set in RequiredItemEventTrigger.");
+            // Debug.LogWarning("Required items are not set in RequiredItemEventTrigger.");
             return;
         }
 
-        if (playerInventory != null && playerInventory.HasItem(requiredItem))
+        bool hasAllItems = true;
+        foreach (GameObject item in requiredItems)
+        {
+            if (!playerInventory.HasItem(item))
+            {
+                hasAllItems = false;
+                break;
+            }
+        }
+
+        if (hasAllItems)
         {
             triggerObject.SetActive(false);
-            // Debug.Log("Player has the required item to trigger the event.");
-
+            // Debug.Log("Player has all the required items to trigger the event.");
         }
         //else
         //{
-        //    // Debug.Log("Player does not have the required item to trigger the event.");
+        //    // Debug.Log("Player does not have all the required items to trigger the event.");
         //}
     }
 }
