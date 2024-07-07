@@ -1,12 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 using StarterAssets;
 
 public class Interactable : MonoBehaviour
 {
-    public Canvas interactionCanvas;
-
+    public Button interactionButton; // button for interaction
     public string[] dialogueLines; // dialogue lines for interaction
-    public string itemName; //name of interactable
+    private string itemName; // name of interactable
 
     public bool isRequiredItem = false;
     public bool LoadNextScene = false;
@@ -19,7 +19,15 @@ public class Interactable : MonoBehaviour
 
     private void Start()
     {
-        interactionCanvas.enabled = false; // hides the interaction canvas at start
+        if (interactionButton != null)
+        {
+            interactionButton.gameObject.SetActive(false); // hide the interaction button at start
+        }
+        else
+        {
+            Debug.LogWarning("Interaction button is missing.");
+        }
+
         itemName = gameObject.name;
     }
 
@@ -35,15 +43,16 @@ public class Interactable : MonoBehaviour
             {
                 ContinueDialogue();
             }
-
         }
     }
 
-    private void StartInteraction() 
+    public void StartInteraction() 
     {
         isInteracting = true;
         playerController.enabled = false; // disable player movement
-        interactionCanvas.enabled = true;
+        interactionButton.gameObject.SetActive(false); // hides the interaction button
+        Debug.Log("Interaction started, player movement disabled.");
+
 
         if (LoadNextScene)
         {
@@ -57,7 +66,8 @@ public class Interactable : MonoBehaviour
 
     private void ContinueDialogue()
     {
-        DialogueManager.Instance.DisplayNextLine(); // displays next line of dialogue
+        DialogueManager.Instance.DisplayNextLine(); // display next line of dialogue
+        Debug.Log("Continuing dialogue.");
     }
 
     public void EndInteraction()
@@ -65,8 +75,18 @@ public class Interactable : MonoBehaviour
         if (isInteracting)
         {
             isInteracting = false;
-            interactionCanvas.enabled = false;
+
+            if (interactionButton != null)
+            {
+                interactionButton.gameObject.SetActive(false); // hide the interaction button
+            }
+            else
+            {
+                Debug.LogWarning("Interaction button is missing.");
+            }
+
             playerController.enabled = true; // enable player movement again
+            Debug.Log("Player movement enabled.");
 
             if (isRequiredItem)
             {
@@ -74,12 +94,13 @@ public class Interactable : MonoBehaviour
                 if (itemObject != null)
                 {
                     playerInventory.AddItem(itemObject);
-                    itemObject.SetActive(false); // deactivates the gameobject
+                    itemObject.SetActive(false); // deactivate the gameobject
+                    Debug.Log("Added to inventory.");
                 }
-                //else
-                //{
-                //    Debug.LogWarning("Item GameObject not found with name: " + itemName);
-                //}
+                else
+                {
+                    Debug.LogWarning(itemName + " not found.");
+                }
             }
         }
     }
@@ -91,7 +112,17 @@ public class Interactable : MonoBehaviour
             isPlayerInRange = true;
             playerController = other.GetComponent<FirstPersonController>();
             playerInventory = other.GetComponent<PlayerInventory>();
-            interactionCanvas.enabled = true; // shows interaction canvas
+            Debug.Log("Player entered trigger.");
+
+            if (interactionButton != null)
+            {
+                interactionButton.gameObject.SetActive(true); // show interaction button
+                //Debug.Log("Interaction button shown on player enter.");
+            }
+            else
+            {
+                Debug.LogWarning("Interaction button is missing.");
+            }
         }
     }
 
@@ -100,7 +131,18 @@ public class Interactable : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInRange = false;
-            interactionCanvas.enabled = false; // hides interaction canvas
+            //Debug.Log("Player exited trigger.");
+
+            if (interactionButton != null)
+            {
+                interactionButton.gameObject.SetActive(false); // hide interaction button
+                //Debug.Log("Interaction button hidden on player exit.");
+            }
+            else
+            {
+                Debug.LogWarning("Interaction button is missing.");
+            }
+
             EndInteraction();
         }
     }

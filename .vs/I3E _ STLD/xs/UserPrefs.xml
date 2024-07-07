@@ -1,18 +1,19 @@
 ﻿<Properties StartupConfiguration="{9912311C-0B69-8FD2-D439-28D23F7DECE5}|">
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="904aea90-ebbc-4e47-9554-de23f33015e8" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Interactable.cs">
     <Files>
-      <File FileName="Assets/Scripts/DialogueManager.cs" />
-      <File FileName="Assets/Scripts/Interactable.cs" Line="42" Column="30" />
-      <File FileName="Assets/Scripts/RequiredItemEventTrigger.cs" Line="24" Column="10" />
+      <File FileName="Assets/Scripts/DialogueManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Interactable.cs" Line="9" Column="12" />
+      <File FileName="Assets/Scripts/RequiredItemEventTrigger.cs" Line="47" Column="10" />
       <File FileName="Assets/Scripts/LoadNextScene.cs" />
       <File FileName="Assets/Scripts/AudioManager.cs" />
+      <File FileName="Assets/Scripts/PlayerInventory.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d149872f-030b-4ceb-9c2d-410ee46a9d40" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
