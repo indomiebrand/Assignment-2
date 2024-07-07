@@ -63,6 +63,14 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueBox.SetActive(false);
         dialogueText.gameObject.SetActive(false);
-        currentInteractable.EndInteraction();
+
+        if (currentInteractable != null)
+        {
+            currentInteractable.EndInteraction();
+        }
+        else
+        {
+            Debug.LogWarning("CurrentInteractable is null in DialogueManager.");
+        }
     }
 }

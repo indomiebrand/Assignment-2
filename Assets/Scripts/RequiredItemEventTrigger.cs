@@ -4,66 +4,66 @@ using UnityEngine;
 
 public class RequiredItemEventTrigger : MonoBehaviour
 {
-    public GameObject[] requiredItems; // array to hold multiple required items
-    public GameObject triggerObject;
+    public GameObject[] requiredItems; // array of required items that the player must have
+    public GameObject eventObject; // the object to trigger when all required items are present
 
-    private Interactable interactableScript;
-    private PlayerInventory playerInventory;
+    private Interactable interactable;
 
     private void Start()
     {
-        interactableScript = GetComponent<Interactable>();
-        if (interactableScript == null)
+        interactable = GetComponent<Interactable>();
+        if (interactable == null)
         {
-            // Debug.LogError("Interactable script not found on the same GameObject as RequiredItemEventTrigger.");
-            return;
+            Debug.LogError("Interactable component not found on " + gameObject.name);
+        }
+    }
+
+    public void CheckRequiredItems(PlayerInventory playerInventory)
+    {
+        bool allItemsPresent = true;
+
+        // check if all required items are in the player's inventory
+        foreach (GameObject requiredItem in requiredItems)
+        {
+            if (!playerInventory.HasItem(requiredItem))
+            {
+                allItemsPresent = false;
+                break;
+            }
         }
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        if (allItemsPresent)
         {
-            playerInventory = player.GetComponent<PlayerInventory>();
+            eventObject.SetActive(false);
+            Debug.Log("Player has all required items. Triggering event.");
+
+            // complete interaction if interactable is set
+            if (interactable != null)
+            {
+                interactable.interactionButton.gameObject.SetActive(false);
+                interactable.EndInteraction(); // end any interaction if its ongoing
+            }
         }
-        //else
-        //{
-        //    // Debug.LogError("Player GameObject not found in the scene.");
-        //}
+        else
+        {
+            // player does not have all required items
+            Debug.Log("Player does not have all required items.");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            CheckTriggerEvent();
-        }
-    }
-
-    private void CheckTriggerEvent()
-    {
-        if (requiredItems == null || requiredItems.Length == 0)
-        {
-            // Debug.LogWarning("Required items are not set in RequiredItemEventTrigger.");
-            return;
-        }
-
-        bool hasAllItems = true;
-        foreach (GameObject item in requiredItems)
-        {
-            if (!playerInventory.HasItem(item))
+            PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
+            if (playerInventory != null)
             {
-                hasAllItems = false;
-                break;
+                CheckRequiredItems(playerInventory);
+            }
+            else
+            {
+                Debug.LogWarning("PlayerInventory component not found on player.");
             }
         }
-
-        if (hasAllItems)
-        {
-            triggerObject.SetActive(false);
-            // Debug.Log("Player has all the required items to trigger the event.");
-        }
-        //else
-        //{
-        //    // Debug.Log("Player does not have all the required items to trigger the event.");
-        //}
     }
 }

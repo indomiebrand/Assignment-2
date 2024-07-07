@@ -22,4 +22,3 @@ public class PlayerInventory : MonoBehaviour
         return items.Contains(item);
     }
 }
-

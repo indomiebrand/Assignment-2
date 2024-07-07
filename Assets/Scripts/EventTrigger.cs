@@ -6,6 +6,24 @@ public class TriggerEvent : MonoBehaviour
 {
     public GameObject targetObject; // the object to hide
     public GameObject showObject; // the object to show
+    public AudioClip triggerSound; // the sound to play
+
+    public BoxCollider boxCollider; 
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.clip = triggerSound;
+
+        // Get the BoxCollider component
+        boxCollider = GetComponent<BoxCollider>();
+        if (boxCollider == null)
+        {
+            Debug.LogWarning("No BoxCollider found on the GameObject.");
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,17 +31,25 @@ public class TriggerEvent : MonoBehaviour
         {
             if (targetObject != null)
             {
-                targetObject.SetActive(false); // hide the target object
+                targetObject.SetActive(false); // hides the target object
             }
 
             if (showObject != null)
             {
-                showObject.SetActive(true); // show the new object
+                showObject.SetActive(true); // shows the new object
             }
 
-            // Hide the trigger object itself
-            gameObject.SetActive(false);
+            // plays the trigger sound when the trigger object disappears
+            if (triggerSound != null)
+            {
+                audioSource.Play();
+            }
+
+            // disables the BoxCollider component
+            if (boxCollider != null)
+            {
+                boxCollider.enabled = false;
+            }
         }
     }
 }
-

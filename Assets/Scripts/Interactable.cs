@@ -1,21 +1,20 @@
+using StarterAssets;
 using UnityEngine;
 using UnityEngine.UI;
-using StarterAssets;
 
 public class Interactable : MonoBehaviour
 {
     public Button interactionButton; // button for interaction
     public string[] dialogueLines; // dialogue lines for interaction
-    private string itemName; // name of interactable
 
-    public bool isRequiredItem = false;
-    public bool LoadNextScene = false;
     private bool isPlayerInRange = false;
     private bool isInteracting = false;
+    public bool loadNextScene = false; // flag to indicate if interacting should load the next scene
 
     private FirstPersonController playerController;
     private PlayerInventory playerInventory;
-    public GameManager gameManager;
+    private GameManager gameManager;
+    private RequiredItem requiredItem;
 
     private void Start()
     {
@@ -28,7 +27,18 @@ public class Interactable : MonoBehaviour
             Debug.LogWarning("Interaction button is missing.");
         }
 
-        itemName = gameObject.name;
+        // finds the GameManager in the scene
+        gameManager = FindObjectOfType<GameManager>();
+        if (gameManager == null)
+        {
+            Debug.LogError("GameManager not found in the scene.");
+        }
+
+        requiredItem = GetComponent<RequiredItem>();
+        if (requiredItem == null)
+        {
+            Debug.LogError("RequiredItem component not found on " + gameObject.name);
+        }
     }
 
     private void Update()
@@ -46,28 +56,56 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    public void StartInteraction() 
+    public void StartInteraction()
     {
-        isInteracting = true;
-        playerController.enabled = false; // disable player movement
-        interactionButton.gameObject.SetActive(false); // hides the interaction button
-        Debug.Log("Interaction started, player movement disabled.");
-
-
-        if (LoadNextScene)
+        if (!isInteracting)
         {
-            gameManager.LoadNextScene();
+            isInteracting = true;
+            playerController.enabled = false; // disable player movement
+
+            if (interactionButton != null)
+            {
+                interactionButton.gameObject.SetActive(false); // hides the interaction button
+            }
+            else
+            {
+                Debug.LogWarning("Interaction button is missing.");
+            }
+
+            if (DialogueManager.Instance != null)
+            {
+                DialogueManager.Instance.StartDialogue(dialogueLines, this); // start dialogue
+            }
+            else
+            {
+                Debug.LogWarning("DialogueManager not found.");
+            }
+
+            Debug.Log("Interaction started, player movement disabled.");
+
+            // check if we need to load the next scene
+            if (loadNextScene)
+            {
+                gameManager.LoadNextScene();
+            }
         }
         else
         {
-            DialogueManager.Instance.StartDialogue(dialogueLines, this);
+            ContinueDialogue();
         }
     }
 
-    private void ContinueDialogue()
+    public void ContinueDialogue()
     {
-        DialogueManager.Instance.DisplayNextLine(); // display next line of dialogue
-        Debug.Log("Continuing dialogue.");
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.DisplayNextLine(); // display next line of dialogue
+            Debug.Log("Continuing dialogue.");
+        }
+        else
+        {
+            Debug.LogWarning("DialogueManager not found.");
+        }
     }
 
     public void EndInteraction()
@@ -85,22 +123,12 @@ public class Interactable : MonoBehaviour
                 Debug.LogWarning("Interaction button is missing.");
             }
 
-            playerController.enabled = true; // enable player movement again
+            playerController.enabled = true; // enable player movement
             Debug.Log("Player movement enabled.");
 
-            if (isRequiredItem)
+            if (requiredItem != null)
             {
-                GameObject itemObject = GameObject.Find(itemName);
-                if (itemObject != null)
-                {
-                    playerInventory.AddItem(itemObject);
-                    itemObject.SetActive(false); // deactivate the gameobject
-                    Debug.Log("Added to inventory.");
-                }
-                else
-                {
-                    Debug.LogWarning(itemName + " not found.");
-                }
+                requiredItem.HandleInteraction(playerInventory); // handle required item interaction
             }
         }
     }
@@ -117,7 +145,6 @@ public class Interactable : MonoBehaviour
             if (interactionButton != null)
             {
                 interactionButton.gameObject.SetActive(true); // show interaction button
-                //Debug.Log("Interaction button shown on player enter.");
             }
             else
             {
@@ -131,19 +158,16 @@ public class Interactable : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInRange = false;
-            //Debug.Log("Player exited trigger.");
+            EndInteraction();
 
             if (interactionButton != null)
             {
-                interactionButton.gameObject.SetActive(false); // hide interaction button
-                //Debug.Log("Interaction button hidden on player exit.");
+                interactionButton.gameObject.SetActive(false); // hide the interaction button when player leaves the collider
             }
             else
             {
                 Debug.LogWarning("Interaction button is missing.");
             }
-
-            EndInteraction();
         }
     }
 }

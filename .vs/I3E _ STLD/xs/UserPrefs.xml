@@ -1,19 +1,25 @@
 ﻿<Properties StartupConfiguration="{9912311C-0B69-8FD2-D439-28D23F7DECE5}|">
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="efd74dab-ddbd-4e6c-b23e-1df3cbed90c3" />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Interactable.cs">
     <Files>
-      <File FileName="Assets/Scripts/DialogueManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Interactable.cs" Line="9" Column="12" />
-      <File FileName="Assets/Scripts/RequiredItemEventTrigger.cs" Line="47" Column="10" />
-      <File FileName="Assets/Scripts/LoadNextScene.cs" />
-      <File FileName="Assets/Scripts/AudioManager.cs" />
-      <File FileName="Assets/Scripts/PlayerInventory.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Interactable.cs" Line="47" Column="25" />
+      <File FileName="Assets/Scripts/RequiredItem.cs" Line="9" Column="25" />
+      <File FileName="Assets/Scripts/RequiredItemEventTrigger.cs" Line="4" Column="1" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="10" Column="6" />
+      <File FileName="Assets/Scripts/CutsceneSkipper.cs" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="Unity" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d149872f-030b-4ceb-9c2d-410ee46a9d40" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
