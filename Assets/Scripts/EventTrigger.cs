@@ -8,7 +8,7 @@ public class TriggerEvent : MonoBehaviour
     public GameObject showObject; // the object to show
     public AudioClip triggerSound; // the sound to play
 
-    public BoxCollider boxCollider; 
+    public BoxCollider boxCollider;
     private AudioSource audioSource;
 
     private void Start()
@@ -17,7 +17,7 @@ public class TriggerEvent : MonoBehaviour
         audioSource.playOnAwake = false;
         audioSource.clip = triggerSound;
 
-        // Get the BoxCollider component
+        // gets the BoxCollider component
         boxCollider = GetComponent<BoxCollider>();
         if (boxCollider == null)
         {

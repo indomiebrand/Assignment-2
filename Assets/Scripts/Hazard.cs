@@ -100,6 +100,7 @@ public class Hazard : MonoBehaviour
         SceneManager.LoadScene("StartMenu");
     }
 
+    //used to add a delay before re-enabling player's movement after player respawns
     private IEnumerator ReEnablePlayerMovement(FirstPersonController playerController, float delay)
     {
         yield return new WaitForSeconds(delay);

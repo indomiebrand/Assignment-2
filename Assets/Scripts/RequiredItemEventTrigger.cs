@@ -52,12 +52,12 @@ public class RequiredItemEventTrigger : MonoBehaviour
             if (eventObject != null)
             {
                 Debug.Log("Player has all required items. Triggering event.");
-                eventObject.SetActive(true); // Make the eventObject appear
+                eventObject.SetActive(true); // makes the eventObject appear
             }
         }
         else
         {
-            // Player does not have all required items
+            // if player does not have all required items
             Debug.Log("Player does not have all required items.");
         }
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//handles the toggling of the UI in the start menu
 public class MenuManager : MonoBehaviour
 {
     public GameObject settingsUI;
@@ -9,7 +10,7 @@ public class MenuManager : MonoBehaviour
     public GameObject instructionsUI;
     private GameObject activeUI;
 
-    void Start()
+    void Start() //initializes all UI panels to be inactive
     {
         settingsUI.SetActive(false);
         creditsUI.SetActive(false);
@@ -31,17 +32,17 @@ public class MenuManager : MonoBehaviour
         SwitchUI(instructionsUI);
     }
 
-    private void SwitchUI(GameObject newUI)
+    private void SwitchUI(GameObject newUI) //responsible for toggling active UI panel
     {
-        if (activeUI != null)
+        if (activeUI != null) //if there is an 'activeUI' panel, it is set to inactive
         {
             activeUI.SetActive(false);
         }
-        if (newUI != null)
+        if (newUI != null) // the new UIpanel is set to active
         {
             newUI.SetActive(true);
         }
-        activeUI = newUI;
+        activeUI = newUI; // 'activeUI' is updated to new UI panel
     }
 }
 
