@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CutsceneSkipper : MonoBehaviour
 {
-    private KeyCode skipKey = KeyCode.E; // key to skip the cutscene
+    public KeyCode skipKey = KeyCode.E; // key to skip the cutscene
 
     private void Update()
     {

@@ -1,24 +1,25 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public List<GameObject> items; // list to hold the interactables
-
-    private void Start()
-    {
-        items = new List<GameObject>(); // initializes the inventory as an empty list
-    }
+    public List<GameObject> inventoryItems = new List<GameObject>();
 
     public void AddItem(GameObject item)
     {
-        items.Add(item);
-        Debug.Log(item + " has been added to the inventory.");
+        if (!inventoryItems.Contains(item))
+        {
+            inventoryItems.Add(item);
+            Debug.Log("Item added to inventory: " + item.name);
+        }
+        else
+        {
+            Debug.Log("Item already in inventory: " + item.name);
+        }
     }
 
     public bool HasItem(GameObject item)
     {
-        return items.Contains(item);
+        return inventoryItems.Contains(item);
     }
 }

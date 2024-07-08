@@ -6,10 +6,10 @@ public class Interactable : MonoBehaviour
 {
     public Button interactionButton; // button for interaction
     public string[] dialogueLines; // dialogue lines for interaction
+    public bool loadNextScene = false; // flag to load the next scene
 
     private bool isPlayerInRange = false;
     private bool isInteracting = false;
-    public bool loadNextScene = false; // flag to indicate if interacting should load the next scene
 
     private FirstPersonController playerController;
     private PlayerInventory playerInventory;
@@ -27,7 +27,7 @@ public class Interactable : MonoBehaviour
             Debug.LogWarning("Interaction button is missing.");
         }
 
-        // finds the GameManager in the scene
+        // Find the GameManager in the scene
         gameManager = FindObjectOfType<GameManager>();
         if (gameManager == null)
         {
@@ -35,10 +35,6 @@ public class Interactable : MonoBehaviour
         }
 
         requiredItem = GetComponent<RequiredItem>();
-        if (requiredItem == null)
-        {
-            Debug.LogError("RequiredItem component not found on " + gameObject.name);
-        }
     }
 
     private void Update()
@@ -82,16 +78,16 @@ public class Interactable : MonoBehaviour
             }
 
             Debug.Log("Interaction started, player movement disabled.");
-
-            // check if we need to load the next scene
-            if (loadNextScene)
-            {
-                gameManager.LoadNextScene();
-            }
         }
         else
         {
             ContinueDialogue();
+        }
+
+        // Check if the scene should be loaded
+        if (loadNextScene)
+        {
+            gameManager.LoadNextScene();
         }
     }
 
@@ -159,15 +155,6 @@ public class Interactable : MonoBehaviour
         {
             isPlayerInRange = false;
             EndInteraction();
-
-            if (interactionButton != null)
-            {
-                interactionButton.gameObject.SetActive(false); // hide the interaction button when player leaves the collider
-            }
-            else
-            {
-                Debug.LogWarning("Interaction button is missing.");
-            }
         }
     }
 }

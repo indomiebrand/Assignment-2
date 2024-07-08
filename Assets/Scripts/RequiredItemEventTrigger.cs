@@ -5,16 +5,30 @@ using UnityEngine;
 public class RequiredItemEventTrigger : MonoBehaviour
 {
     public GameObject[] requiredItems; // array of required items that the player must have
-    public GameObject eventObject; // the object to trigger when all required items are present
-
-    private Interactable interactable;
+    public GameObject eventObject; //  object to trigger when all required items are present
+    private PlayerInventory playerInventory; // ref to the player's inventory
 
     private void Start()
     {
-        interactable = GetComponent<Interactable>();
-        if (interactable == null)
+        if (eventObject != null)
         {
-            Debug.LogError("Interactable component not found on " + gameObject.name);
+            eventObject.SetActive(false); // makes sure the eventObject is inactive at the start
+        }
+
+        // finds the player inventory in the scene
+        playerInventory = FindObjectOfType<PlayerInventory>();
+        if (playerInventory == null)
+        {
+            Debug.LogError("PlayerInventory not found in the scene.");
+        }
+    }
+
+    private void Update()
+    {
+        // checks if the player has all required items periodically
+        if (playerInventory != null)
+        {
+            CheckRequiredItems(playerInventory);
         }
     }
 
@@ -22,7 +36,7 @@ public class RequiredItemEventTrigger : MonoBehaviour
     {
         bool allItemsPresent = true;
 
-        // check if all required items are in the player's inventory
+        // checks if all required items are in the player's inventory
         foreach (GameObject requiredItem in requiredItems)
         {
             if (!playerInventory.HasItem(requiredItem))
@@ -34,36 +48,17 @@ public class RequiredItemEventTrigger : MonoBehaviour
 
         if (allItemsPresent)
         {
-            eventObject.SetActive(false);
-            Debug.Log("Player has all required items. Triggering event.");
 
-            // complete interaction if interactable is set
-            if (interactable != null)
+            if (eventObject != null)
             {
-                interactable.interactionButton.gameObject.SetActive(false);
-                interactable.EndInteraction(); // end any interaction if its ongoing
+                Debug.Log("Player has all required items. Triggering event.");
+                eventObject.SetActive(true); // Make the eventObject appear
             }
         }
         else
         {
-            // player does not have all required items
+            // Player does not have all required items
             Debug.Log("Player does not have all required items.");
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
-            if (playerInventory != null)
-            {
-                CheckRequiredItems(playerInventory);
-            }
-            else
-            {
-                Debug.LogWarning("PlayerInventory component not found on player.");
-            }
         }
     }
 }
