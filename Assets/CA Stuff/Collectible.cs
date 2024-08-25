@@ -11,7 +11,7 @@ public class Collectible : MonoBehaviour
     {
         Debug.Log("Collected!");
 
-        StarterAssets.FirstPersonController controller = player.GetComponent<StarterAssets.FirstPersonController>();
+        StarterAssets.ThirdPersonController controller = player.GetComponent<StarterAssets.ThirdPersonController>();
         if (controller != null)
         {
             controller.MoveSpeed += SpeedIncrease;
